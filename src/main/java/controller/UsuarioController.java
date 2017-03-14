@@ -50,4 +50,35 @@ public class UsuarioController extends HttpServlet {
 
 	}
 
+	
+	
+	
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//capturando o indice do objeto a ser alterado
+		Integer i =Integer.parseInt(req.getParameter("i"));
+	
+		// Capturando dados a serem alterados
+		String nome = req.getParameter("nome");
+		String email = req.getParameter("email");
+
+		
+		// Acessando o objeto e alterando os dados
+		Usuario usu = lista.get(i);
+		usu.setNome(nome);
+		usu.setEmail(email);
+
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//capturando o indice do objeto a ser excluido
+		int i =Integer.parseInt(req.getParameter("i"));
+		//removendo objeto do array
+		lista.remove(i);
+
+	}
+	
+	
 }
