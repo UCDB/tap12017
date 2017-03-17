@@ -92,7 +92,7 @@
                       
                      
                         if(usuario){
-
+                                //Inserir novo
                                 if(this.itemEditar==-1){
                                     
                                     //salvar na API
@@ -116,9 +116,28 @@
                                     xhttp.send("nome="+usuario);
                                 
                                 }else {
-                                    //Altera quando tem alguem para alterar
-                                      this.usuarios.splice(this.itemEditar, 1, usuario.trim());  
-                                      this.itemEditar=-1;
+                                    
+                                    //Alterando na API
+
+
+                                    
+                                    var xhttp = new XMLHttpRequest();
+                                    
+                                    //callback
+                                    xhttp.onreadystatechange = function() {
+                                        //processou com sucesso
+                                        if (this.readyState == 4 && this.status == 200) {
+                                                //Altera quando tem alguem para alterar
+                                                 this.usuarios.splice(app.itemEditar, 1, usuario.trim()); 
+                                        }
+                                    };
+
+                                    //Faz o request
+                                    xhttp.open("PUT", "usucontroller", true);
+                                    //Formato dos dados para envio
+                                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                    xhttp.send("i="+this.itemEditar+"&nome="+usuario);
+                                    this.itemEditar=-1;
                                 }
 
                                  //Atualizando a tela
