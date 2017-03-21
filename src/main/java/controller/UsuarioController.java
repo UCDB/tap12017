@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +38,27 @@ public class UsuarioController extends HttpServlet {
 
 		
 		
-		resp.getWriter().println(jsonHelper.gerarJsonUsuario(usu));
+		try {
+			resp.getWriter().println(jsonHelper.gerarJson(usu));
+	
+		
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String json = jsonHelper.gerarJsonListaUsuario(lista);
+		String json = jsonHelper.gerarJsonLista(lista);
 		resp.getWriter().print(json);
 
 	}
