@@ -1,8 +1,9 @@
 package helper;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.Cliente;
@@ -10,15 +11,15 @@ import model.Usuario;
 
 public class JsonHelper {
 
-	public String gerarJsonLista(List<?> lista) {
+	public String gerarJsonLista(List<Object> lista) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		StringBuffer json = new StringBuffer("[");
 
-		/*for (int i = 0; i < lista.size(); i++) {
+		for (int i = 0; i < lista.size(); i++) {
 
-			json.append("{ nome:" + lista.get(i).getNome() + "  , email: " + lista.get(i).getEmail() + "  }");
+			json.append(gerarJson(lista.get(i)));
 			if (i < lista.size() - 1)
 				json.append(",");
-		}*/
+		}
 		json.append("]");
 		return json.toString();
 
@@ -65,13 +66,48 @@ public class JsonHelper {
 		u.setNome("Ze");
 		u.setEmail("Ze@gmail");
 		
+		
+		Usuario u2 = new Usuario();
+		u2.setNome("Jao");
+		u2.setEmail("jao@gmail");
+		
+		
+		//List<Object> lista= Arrays.asList(u,u2);
+		
+		List<Object> listaUsuarios = new ArrayList();
+		listaUsuarios.add(u);
+		listaUsuarios.add(u2);
+		
+		
+		
+		
+		
+		
 		Cliente c = new Cliente();
 		c.setCpf("8778787");
 		
+		Cliente c2 = new Cliente();
+		c2.setCpf("77777777");
+		
+		
+		List<Object> listaClientes= Arrays.asList(c,c2);
+		
+		
+		
+		List<Object> listaMista = Arrays.asList(u,u2,c,c2);
+		
+		
 		
 		JsonHelper helper = new JsonHelper();
-		System.out.println(helper.gerarJson(u));
+		//System.out.println(helper.gerarJsonLista(listaUsuarios));
+		//System.out.println(helper.gerarJsonLista(listaClientes));
+	
+		System.out.println(helper.gerarJsonLista(listaMista));
+		
+		//System.out.println(helper.gerarJson(c));
+
 	}
+	
 	
 
 }
