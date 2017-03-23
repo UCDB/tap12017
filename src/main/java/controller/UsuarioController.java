@@ -19,7 +19,7 @@ public class UsuarioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Usuario> lista = new ArrayList<>();
+	private List<Object> lista = new ArrayList<>();
 	
 	private JsonHelper jsonHelper =  new JsonHelper();
 			
@@ -58,8 +58,15 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String json = jsonHelper.gerarJsonLista(lista);
-		resp.getWriter().print(json);
+		String json;
+		try {
+			json = jsonHelper.gerarJsonLista(lista);
+			resp.getWriter().print(json);
+		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
@@ -73,7 +80,7 @@ public class UsuarioController extends HttpServlet {
 		String email = req.getParameter("email");
 
 		// Acessando o objeto e alterando os dados
-		Usuario usu = lista.get(i);
+		Usuario usu = (Usuario)lista.get(i);
 		usu.setNome(nome);
 		usu.setEmail(email);
 
