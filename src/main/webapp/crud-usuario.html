@@ -4,12 +4,13 @@
             <meta charset="UTF-8"/>
      
     </head>
-    <body>
+    <body> 
         
 
         <form action="javascript:void(0)" onsubmit="app.salvar()">
 
-                <input type="text" id="add-nome" placeholder="Novo Usuário">
+                <input type="text" id="add-nome" placeholder="Nome">
+                <input type="text" id="add-email" placeholder="Email">
                 <input type="submit" value="Salvar">
                  <input type="button" value="Cancelar" onclick="app.novo()">
     
@@ -31,6 +32,7 @@
 
 
        <script>
+
             //instancia de uma classe Anonima
                var app= new function(){
                     console.log("Instancinado app 2");
@@ -60,21 +62,22 @@
                     this.listarTodos = function(){
 
 
-                             /*var xhttp = new XMLHttpRequest();
+                          var xhttp = new XMLHttpRequest();
                                     
                             //callback
                             xhttp.onreadystatechange = function() {
                                 //processou com sucesso
                                 if (this.readyState == 4 && this.status == 200) {
                                         //inserindo no vetor
-                                        app.usuarios=this.data;
+                                        //JSON.parse(ajaxResponse);
+                                        app.usuarios=eval(this.responseText);
                                        
                                 }
                             };
 
                             //Faz o request
                             xhttp.open("GET", "usucontroller", true);
-                            xhttp.send(); */
+                            xhttp.send(); 
 
 
                            
@@ -82,7 +85,8 @@
                         var dados = '';
                         for (i=0;i<this.usuarios.length;i++){
                             dados+='<tr>';
-                            dados+='<td>'+this.usuarios[i]+'</td>';
+                            dados+='<td>'+this.usuarios[i].nome+'</td>';
+                            dados+='<td>'+this.usuarios[i].email+'</td>';
                             dados+='<td><button onclick="app.excluir('+i+')">excluir</button></td>';
                             dados+='<td><button onclick="app.editar('+i+')">editar</button></td>';
                           
@@ -99,7 +103,7 @@
 
                     this.excluir= function(item){
                         //remove1 1 elemento
-                        this.usuarios.splice(item, 1);
+                     //   this.usuarios.splice(item, 1);
                         this.listarTodos();
                     }
                 
@@ -108,8 +112,11 @@
 
                         //acessando o campo com o nome do usuarios
                         var elNome = document.getElementById("add-nome");
+
+                        var elEmail = document.getElementById("add-email");
+
                         //pegando o texto preenchido
-                        var usuario =  elNome.value;
+                        var usuario =  {nome:elNome.value,email:elEmail.value};
                       
                      
                         if(usuario){
@@ -126,7 +133,7 @@
                                         //processou com sucesso
                                         if (this.readyState == 4 && this.status == 200) {
                                                 //inserindo no vetor
-                                                app.usuarios.push(usuario);
+                                              //  app.usuarios.push(usuario);
                                                 app.listarTodos();
                                         }
                                     };
@@ -135,7 +142,7 @@
                                     xhttp.open("POST", "usucontroller", true);
                                     //Formato dos dados para envio
                                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                    xhttp.send("nome="+usuario);
+                                    xhttp.send("nome="+usuario.nome+"&email="+usuario.email);
                                 
                                 }else {
                                     
@@ -150,7 +157,7 @@
                                         //processou com sucesso
                                         if (this.readyState == 4 && this.status == 200) {
                                                 //Altera quando tem alguem para alterar
-                                                 app.usuarios.splice(app.itemEditar, 1, usuario.trim()); 
+                                                 //app.usuarios.splice(app.itemEditar, 1, usuario); 
                                                  app.listarTodos();
                                         }
                                     };
@@ -179,7 +186,9 @@
                     this.novo=function(){
                         this.itemEditar=-1;
                         var elNome = document.getElementById("add-nome");
+                        var elEmail = document.getElementById("add-email");
                         elNome.value="";
+                        elEmail.value="";
                     }
                 
                     this.editar=function(item){
