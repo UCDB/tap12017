@@ -34,10 +34,11 @@
             //instancia de uma classe Anonima
                var app= new function(){
                     console.log("Instancinado app 2");
-
                     this.elUsuarios = document.getElementById("usuarios");
-                    this.usuarios=['Jão','Zé','Maria'];
+                    this.usuarios=[];
                     this.itemEditar =-1;
+
+                    
 
                     this.contar = function (qtd){
                         var elContador = document.getElementById("contador");
@@ -57,6 +58,26 @@
 
 
                     this.listarTodos = function(){
+
+
+                             /*var xhttp = new XMLHttpRequest();
+                                    
+                            //callback
+                            xhttp.onreadystatechange = function() {
+                                //processou com sucesso
+                                if (this.readyState == 4 && this.status == 200) {
+                                        //inserindo no vetor
+                                        app.usuarios=this.data;
+                                       
+                                }
+                            };
+
+                            //Faz o request
+                            xhttp.open("GET", "usucontroller", true);
+                            xhttp.send(); */
+
+
+                           
                         //gera String em formato tabela
                         var dados = '';
                         for (i=0;i<this.usuarios.length;i++){
@@ -106,6 +127,7 @@
                                         if (this.readyState == 4 && this.status == 200) {
                                                 //inserindo no vetor
                                                 app.usuarios.push(usuario);
+                                                app.listarTodos();
                                         }
                                     };
 
@@ -128,20 +150,25 @@
                                         //processou com sucesso
                                         if (this.readyState == 4 && this.status == 200) {
                                                 //Altera quando tem alguem para alterar
-                                                 this.usuarios.splice(app.itemEditar, 1, usuario.trim()); 
+                                                 app.usuarios.splice(app.itemEditar, 1, usuario.trim()); 
+                                                 app.listarTodos();
                                         }
                                     };
 
+
+                                    params ="i="+this.itemEditar+"&nome="+usuario;
                                     //Faz o request
-                                    xhttp.open("PUT", "usucontroller", true);
+                                    xhttp.open("PUT", "usucontroller?"+params, true);
                                     //Formato dos dados para envio
                                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                    xhttp.send("i="+this.itemEditar+"&nome="+usuario);
+                                   
+                                  
+                                    xhttp.send();
                                     this.itemEditar=-1;
                                 }
 
                                  //Atualizando a tela
-                                this.listarTodos();
+                                
                                 this.novo();
                         
                         

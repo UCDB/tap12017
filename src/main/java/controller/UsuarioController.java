@@ -72,8 +72,10 @@ public class UsuarioController extends HttpServlet {
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String posicao = req.getParameter("i");
 		// capturando o indice do objeto a ser alterado
-		Integer i = Integer.parseInt(req.getParameter("i"));
+		Integer i = Integer.parseInt(posicao);
 
 		// Capturando dados a serem alterados
 		String nome = req.getParameter("nome");
