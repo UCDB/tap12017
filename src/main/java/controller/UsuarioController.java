@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import helper.JsonHelper;
 import model.Usuario;
 import repository.UsuarioRepository;
+import repository.UsuarioRepositoryBanco;
 
 @WebServlet(urlPatterns = "/usucontroller")
 public class UsuarioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private UsuarioRepository usuarioRepository = new UsuarioRepository();
+	private UsuarioRepository usuarioRepository = new UsuarioRepositoryBanco();
 
 	private JsonHelper jsonHelper = new JsonHelper();
 
