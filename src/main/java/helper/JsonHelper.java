@@ -11,7 +11,7 @@ import model.Usuario;
 
 public class JsonHelper {
 
-	public String gerarJsonLista(List<Object> lista) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public String gerarJsonLista(List<?> lista) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		StringBuffer json = new StringBuffer("[");
 
 		for (int i = 0; i < lista.size(); i++) {

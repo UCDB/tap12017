@@ -2,6 +2,7 @@ package model;
 
 public class Usuario {
 
+	private Integer id;
 	private String nome;
 	private String email;
 
@@ -28,6 +29,14 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

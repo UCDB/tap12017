@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import helper.JsonHelper;
 import model.Usuario;
+import repository.UsuarioRepository;
 
 @WebServlet(urlPatterns = "/usucontroller")
 public class UsuarioController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Object> lista = new ArrayList<>();
-	
-	private JsonHelper jsonHelper =  new JsonHelper();
-			
+	private UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+	private JsonHelper jsonHelper = new JsonHelper();
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,14 +34,9 @@ public class UsuarioController extends HttpServlet {
 		Usuario usu = new Usuario(nome, email);
 
 		// Inserir na lista
-		lista.add(usu);
-
-		
-		
+		usuarioRepository.cadastrar(usu);
 		try {
 			resp.getWriter().println(jsonHelper.gerarJson(usu));
-	
-		
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +47,6 @@ public class UsuarioController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
@@ -60,43 +54,43 @@ public class UsuarioController extends HttpServlet {
 
 		String json;
 		try {
-			json = jsonHelper.gerarJsonLista(lista);
+			json = jsonHelper.gerarJsonLista(usuarioRepository.buscarTodos());
 			resp.getWriter().print(json);
 		} catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		String posicao = req.getParameter("i");
+
+		String idUsu = req.getParameter("id");
 		// capturando o indice do objeto a ser alterado
-		Integer i = Integer.parseInt(posicao);
+		Integer id = Integer.parseInt(idUsu);
 
 		// Capturando dados a serem alterados
 		String nome = req.getParameter("nome");
 		String email = req.getParameter("email");
 
-		// Acessando o objeto e alterando os dados
-		Usuario usu = (Usuario)lista.get(i);
-		usu.setNome(nome);
-		usu.setEmail(email);
+		// Colocando dados da tela em objeto usuario
+		Usuario usuario = new Usuario();
+		usuario.setId(id);
+		usuario.setNome(nome);
+		usuario.setEmail(email);
+
+		usuarioRepository.alterar(usuario);
 
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// capturando o indice do objeto a ser excluido
-		int i = Integer.parseInt(req.getParameter("i"));
+		int id = Integer.parseInt(req.getParameter("id"));
 		// removendo objeto do array
-		lista.remove(i);
+		usuarioRepository.excluir(id);
 
 	}
-
-	
 
 }
