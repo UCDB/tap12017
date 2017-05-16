@@ -39,4 +39,10 @@ public class Usuario {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + "]";
+	}
+
+	
 }

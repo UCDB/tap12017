@@ -2,7 +2,9 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Usuario;
@@ -33,8 +35,41 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 
 	@Override
 	public List<Usuario> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		List<Usuario> lista = new ArrayList<>();
+		
+		try {
+			
+			String sql ="select * from usuario order by nome";
+			PreparedStatement prepareStatement = conexao.prepareStatement(sql);
+			ResultSet result = prepareStatement.executeQuery();
+
+		
+			
+			while(result.next()){
+				int id = result.getInt("id");
+				String nome =  result.getString("nome");
+				String email = result.getString("email");
+				
+				Usuario u = new Usuario();
+				u.setId(id);
+				u.setNome(nome);
+				u.setEmail(email);
+				
+				lista.add(u);
+				
+				
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lista;
 	}
 
 	@Override
