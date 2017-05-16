@@ -11,6 +11,8 @@ public interface UsuarioRepository {
 	public List<Usuario> buscarTodos() ;
 
 	public void alterar(Usuario usuario) ;
+	
+	public void salvar(Usuario usuario) ;
 
 	public Usuario buscarPorId(Integer id) ;
 	

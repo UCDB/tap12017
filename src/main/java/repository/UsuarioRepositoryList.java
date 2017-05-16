@@ -53,4 +53,14 @@ public class UsuarioRepositoryList implements UsuarioRepository {
 		}
 	}
 
+	@Override
+	public void salvar(Usuario usuario) {
+		if (usuario.getId()==null){
+			cadastrar(usuario);
+		}else{
+			alterar(usuario);
+		}
+		
+	}
+
 }
